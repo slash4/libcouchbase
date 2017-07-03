@@ -137,7 +137,7 @@ module Libcouchbase
         def process_next_item(can_loop = true)
             return if @query_completed
             final, item = @queue.pop
-            
+
             if final
                 if final == :error
                     @error = item unless @cancelled
@@ -156,7 +156,8 @@ module Libcouchbase
                  # Do we want to transform the results
                 if @row_modifier
                     begin
-                        @results << @row_modifier.call(item)
+                        modified = @row_modifier.call(item)
+                        @results << modified unless modified.nil?
                     rescue Exception => e
                         @error = e
                         @cancelled = true
@@ -197,7 +198,7 @@ module Libcouchbase
             @cancelled = false
             @error = nil
 
-            # This flag is required so we don't 
+            # This flag is required so we don't
             @results.clear
             @queue = Queue.new
 

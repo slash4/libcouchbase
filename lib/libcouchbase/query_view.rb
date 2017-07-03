@@ -98,7 +98,7 @@ module Libcouchbase
                 begin
                     raw_string = doc[:value].read_string(doc[:nvalue])
                 rescue FFI::NullPointerError
-                    @callback.call(false, resp) #Doc not found.
+                    @callback.call(false, nil) #Doc not found.
                 end
                 resp.value, meta[:format] = @connection.parse_document(raw_string, flags: doc[:itmflags])
                 meta[:flags] = doc[:itmflags]

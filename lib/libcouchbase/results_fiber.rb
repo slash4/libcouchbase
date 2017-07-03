@@ -12,7 +12,7 @@ module Libcouchbase
             @results = []
             @fiber = nil
 
-            # We don't want to resume a fiber that is waiting 
+            # We don't want to resume a fiber that is waiting
             # in a yield to user code as then the Fiber might
             # end before we've finished processing and this is
             # very much not desirable - dead fiber errors
@@ -205,7 +205,9 @@ module Libcouchbase
             # Do we want to transform the results
             elsif @row_modifier
                 begin
-                    @results << @row_modifier.call(item)
+                    modified = @row_modifier.call(item)
+                    @results << modified unless modified.nil?
+                    #@results << @row_modifier.call(item)
                 rescue Exception => e
                     @error = e
                 end
@@ -248,7 +250,7 @@ module Libcouchbase
                 @error = nil
                 raise err unless @cancelled
             end
-        end 
+        end
     end
 
     class ResultsEM < ResultsFiber
