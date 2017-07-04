@@ -160,8 +160,10 @@ module Libcouchbase
                         puts item.inspect
                         puts item.nil?
                         unless item.nil?
-                            puts "blaaaa"
-                            @results << @row_modifier.call(item)
+                            unless item.value.nil?
+                                puts "blaaaa"
+                                @results << @row_modifier.call(item)
+                            end
                         end
                     rescue Exception => e
                         @error = e
