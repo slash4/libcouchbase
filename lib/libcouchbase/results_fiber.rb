@@ -205,9 +205,12 @@ module Libcouchbase
             # Do we want to transform the results
             elsif @row_modifier
                 begin
-                    modified = @row_modifier.call(item)
-                    @results << modified unless modified.nil?
-                    #@results << @row_modifier.call(item)
+                    unless item.nil?
+                        unless item.value.nil?
+                            #puts "blaaaa"
+                            @results << @row_modifier.call(item)
+                        end
+                    end
                 rescue Exception => e
                     @error = e
                 end
