@@ -156,8 +156,12 @@ module Libcouchbase
                  # Do we want to transform the results
                 if @row_modifier
                     begin
+                        puts "item : "
+                        puts item.inspect
+                        puts item.nil?
                         unless item.nil?
-                          @results << @row_modifier.call(item)
+                            puts "blaaaa"
+                            @results << @row_modifier.call(item)
                         end
                     rescue Exception => e
                         @error = e
