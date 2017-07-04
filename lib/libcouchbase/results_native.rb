@@ -161,7 +161,7 @@ module Libcouchbase
                         modified = @row_modifier.call(item)
                         puts "after"
                         puts modified.inspect
-                        @results << modified unless modified.nil?
+                        @results << modified unless item.nil?
                     rescue Exception => e
                         @error = e
                         @cancelled = true
