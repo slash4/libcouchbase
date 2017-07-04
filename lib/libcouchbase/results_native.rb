@@ -156,12 +156,7 @@ module Libcouchbase
                  # Do we want to transform the results
                 if @row_modifier
                     begin
-                        puts "before"
-                        puts item.inspect
-                        modified = @row_modifier.call(item)
-                        puts "after"
-                        puts modified.inspect
-                        @results << modified unless item.nil?
+                        @results << @row_modifier.call(item) unless item.nil?
                     rescue Exception => e
                         @error = e
                         @cancelled = true
